@@ -1,1 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Have They Read It?</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+</head>
+
+<body>
+
+  <main class="container">
+
+    <h1>📚 Have They Read It?</h1>
+
+    <p class="subtitle">
+      Check whether someone has read a book.
+    </p>
+
+
+    <section class="search-card">
+
+      <label for="person">
+        Person
+      </label>
+
+      <select id="person">
+        <option value="Kirb">Kirb</option>
+
+        <!-- Add more people here later -->
+        <!--
+        <option value="Sarah">Sarah</option>
+        <option value="Mike">Mike</option>
+        -->
+      </select>
+
+
+      <label for="book">
+        Book
+      </label>
+
+      <div class="search-row">
+
+        <input
+          id="book"
+          type="text"
+          placeholder="Enter a book title..."
+          autocomplete="off"
+        >
+
+        <button id="searchButton">
+          Check
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <section
+      id="result"
+      class="result hidden"
+    >
+
+      <!-- Result gets inserted here -->
+
+    </section>
+
+
+    <p
+      id="error"
+      class="error hidden"
+    ></p>
+
+  </main>
+
+
+  <script src="app.js"></script>
+
+</body>
+
+</html>
