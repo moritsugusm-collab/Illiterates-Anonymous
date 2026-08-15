@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -9,32 +10,39 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Have They Read It?</title>
+  <title>Book Checker</title>
 
   <link
     rel="stylesheet"
     href="style.css"
   >
+
 </head>
+
 
 <body>
 
   <main class="container">
 
-    <h1>📚 Have They Read It?</h1>
+    <header>
 
-    <p class="subtitle">
-      Check whether someone has read a book.
-    </p>
+      <h1>Books</h1>
+
+      <p>
+        See which books someone has read.
+      </p>
+
+    </header>
 
 
-    <section class="search-card">
+    <section class="person-selector">
 
       <label for="person">
         Person
       </label>
 
       <select id="person">
+
         <option value="Bass">Bass</option>
         <option value="Baxter">Baxter</option>
         <option value="Ethan">Ethan</option>
@@ -50,43 +58,25 @@
 
       </select>
 
-
-      <label for="book">
-        Book
-      </label>
-
-      <div class="search-row">
-
-        <input
-          id="book"
-          type="text"
-          placeholder="Enter a book title..."
-          autocomplete="off"
-        >
-
-        <button id="searchButton">
-          Check
-        </button>
-
-      </div>
-
     </section>
 
 
-    <section
-      id="result"
-      class="result hidden"
+    <div
+      id="bookList"
+      class="book-list"
     >
 
-      <!-- Result gets inserted here -->
+      <div class="loading">
+        Checking books...
+      </div>
 
-    </section>
+    </div>
 
 
-    <p
+    <div
       id="error"
       class="error hidden"
-    ></p>
+    ></div>
 
   </main>
 
