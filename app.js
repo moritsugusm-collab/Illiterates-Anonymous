@@ -27,7 +27,7 @@ const TITLES = [
     ],
 
     image1:
-      "images/empty-bookmark.png",
+       "images/harry-potter-not-read.jpg",
 
     image2:
       "images/smiley.jpg"
