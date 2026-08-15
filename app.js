@@ -1,225 +1,454 @@
+/**
+ * ============================================================
+ * SETTINGS
+ * ============================================================
+ */
+
 const API_URL =
   'https://script.google.com/macros/s/AKfycbzBFGr_Fw-XE6B0JWMrVYkJEPupijPe5-ba-IBGdTrAzDXzT514bPMd81vdreISbb0ovg/exec';
 
 
+/**
+ * Each title can have up to 3 Goodreads book IDs.
+ *
+ * image1 = user has read NONE of the books
+ *
+ * image2 = user has read AT LEAST ONE book
+ */
+const TITLES = [
+
+  {
+    title: "Harry Potter",
+
+    books: [
+      "3",
+      "5",
+      "6"
+    ],
+
+    image1:
+      "images/harry-potter-not-read.jpg",
+
+    image2:
+      "images/harry-potter-read.jpg"
+  },
+
+
+  {
+    title: "Dune",
+
+    books: [
+      "234225",
+      "44767458",
+      "36346344"
+    ],
+
+    image1:
+      "images/dune-not-read.jpg",
+
+    image2:
+      "images/dune-read.jpg"
+  },
+
+
+  {
+    title: "The Lord of the Rings",
+
+    books: [
+      "33",
+      "15241",
+      "117499"
+    ],
+
+    image1:
+      "images/lotr-not-read.jpg",
+
+    image2:
+      "images/lotr-read.jpg"
+  }
+
+];
+
+
+/**
+ * ============================================================
+ * ELEMENTS
+ * ============================================================
+ */
+
 const personInput =
   document.getElementById('person');
 
-const bookInput =
-  document.getElementById('book');
+const bookList =
+  document.getElementById('bookList');
 
-const searchButton =
-  document.getElementById('searchButton');
-
-const result =
-  document.getElementById('result');
-
-const error =
+const errorElement =
   document.getElementById('error');
 
 
-searchButton.addEventListener(
-  'click',
-  checkBook
+/**
+ * Check books whenever the selected
+ * person changes.
+ */
+personInput.addEventListener(
+  'change',
+  checkAllBooks
 );
 
 
-bookInput.addEventListener(
-  'keydown',
-  event => {
-
-    if (event.key === 'Enter') {
-      checkBook();
-    }
-
-  }
-);
+/**
+ * Initial check.
+ */
+checkAllBooks();
 
 
-async function checkBook() {
+/**
+ * ============================================================
+ * CHECK BOOKS
+ * ============================================================
+ */
+
+function checkAllBooks() {
+
+  hideError();
+
 
   const person =
     personInput.value.trim();
 
-  const book =
-    bookInput.value.trim();
 
-
-  hideResult();
-  hideError();
-
-
-  if (!book) {
+  if (!person) {
 
     showError(
-      'Please enter a book title.'
+      'Please select a person.'
     );
 
     return;
   }
 
 
-  searchButton.disabled = true;
-
-  searchButton.textContent =
-    'Checking...';
-
-
-  try {
-
-    const url =
-      API_URL +
-      '?person=' +
-      encodeURIComponent(person) +
-      '&book=' +
-      encodeURIComponent(book);
+  /*
+   * Collect every unique Goodreads ID
+   * from every title.
+   */
+  const allBookIds = [];
 
 
-    const response =
-      await fetch(url);
+  TITLES.forEach(item => {
+
+    item.books.forEach(id => {
+
+      const cleanId =
+        String(id).trim();
 
 
-    if (!response.ok) {
+      if (
+        cleanId &&
+        !allBookIds.includes(cleanId)
+      ) {
 
-      throw new Error(
-        'The server returned an error.'
+        allBookIds.push(
+          cleanId
+        );
+
+      }
+
+    });
+
+  });
+
+
+  if (allBookIds.length === 0) {
+
+    displayBooks(
+      new Set()
+    );
+
+    return;
+  }
+
+
+  showLoading();
+
+
+  requestReadBooks(
+    person,
+    allBookIds
+  );
+
+}
+
+
+/**
+ * ============================================================
+ * API REQUEST
+ * ============================================================
+ */
+
+function requestReadBooks(
+  person,
+  ids
+) {
+
+  const callbackName =
+    'goodreadsCallback_' +
+    Date.now();
+
+
+  /*
+   * Create JSONP callback.
+   */
+  window[callbackName] =
+    function(data) {
+
+      try {
+
+        if (!data.success) {
+
+          showError(
+            data.error ||
+            'Unable to check books.'
+          );
+
+          return;
+        }
+
+
+        /*
+         * Store all Goodreads IDs
+         * that this person has read.
+         */
+        const readIds =
+          new Set();
+
+
+        data.results.forEach(
+          result => {
+
+            if (result.read) {
+
+              readIds.add(
+                result.id
+              );
+
+            }
+
+          }
+        );
+
+
+        displayBooks(
+          readIds
+        );
+
+      } finally {
+
+        delete window[
+          callbackName
+        ];
+
+        script.remove();
+
+      }
+
+    };
+
+
+  const script =
+    document.createElement(
+      'script'
+    );
+
+
+  const encodedPerson =
+    encodeURIComponent(
+      person
+    );
+
+
+  const encodedIds =
+    encodeURIComponent(
+      ids.join(',')
+    );
+
+
+  script.src =
+    API_URL +
+    '?person=' +
+    encodedPerson +
+    '&ids=' +
+    encodedIds +
+    '&callback=' +
+    callbackName;
+
+
+  script.onerror =
+    function() {
+
+      showError(
+        'Unable to connect to the book database.'
       );
 
-    }
+
+      delete window[
+        callbackName
+      ];
+
+      script.remove();
+
+    };
 
 
-    const data =
-      await response.json();
+  document
+    .body
+    .appendChild(script);
+
+}
 
 
-    if (!data.success) {
+/**
+ * ============================================================
+ * DISPLAY BOOK TITLES
+ * ============================================================
+ */
 
-      throw new Error(
-        data.error ||
-        'Something went wrong.'
+function displayBooks(
+  readIds
+) {
+
+  bookList.innerHTML = '';
+
+
+  TITLES.forEach(item => {
+
+    /*
+     * Check whether ANY of the three
+     * Goodreads IDs has been read.
+     */
+    const hasBeenRead =
+      item.books.some(
+        id =>
+          readIds.has(
+            String(id).trim()
+          )
       );
 
-    }
+
+    const bookElement =
+      document.createElement(
+        'div'
+      );
 
 
-    if (data.found) {
+    bookElement.className =
+      'book';
 
-      showReadResult(data);
+
+    /*
+     * Title.
+     */
+    const titleElement =
+      document.createElement(
+        'div'
+      );
+
+
+    titleElement.className =
+      'book-title';
+
+
+    titleElement.textContent =
+      item.title;
+
+
+    bookElement.appendChild(
+      titleElement
+    );
+
+
+    /*
+     * IMAGE LOGIC
+     *
+     * 0 books read:
+     *     image1
+     *
+     * 1+ books read:
+     *     image2
+     */
+    const image =
+      document.createElement(
+        'img'
+      );
+
+
+    image.className =
+      'read-image';
+
+
+    if (hasBeenRead) {
+
+      image.src =
+        item.image2;
+
+      image.alt =
+        `${item.title} - read`;
 
     } else {
 
-      showNotReadResult(
-        person,
-        book
-      );
+      image.src =
+        item.image1;
+
+      image.alt =
+        `${item.title} - not read`;
 
     }
 
-  } catch (err) {
 
-    console.error(err);
+    image.loading =
+      'lazy';
 
-    showError(
-      'Unable to check the reading list right now.'
+
+    bookElement.appendChild(
+      image
     );
 
-  } finally {
 
-    searchButton.disabled = false;
+    bookList.appendChild(
+      bookElement
+    );
 
-    searchButton.textContent =
-      'Check';
-
-  }
+  });
 
 }
 
 
-function showReadResult(data) {
+/**
+ * ============================================================
+ * UI HELPERS
+ * ============================================================
+ */
 
-  result.innerHTML = `
+function showLoading() {
 
-    <div class="result-icon read">
-      ✓
+  bookList.innerHTML = `
+
+    <div class="loading">
+      Checking books...
     </div>
-
-    <h2 class="result-title">
-      Yes!
-    </h2>
-
-    <p class="result-author">
-      ${escapeHtml(data.title)}
-      <br>
-      by ${escapeHtml(data.author)}
-    </p>
-
-    ${
-      data.dateRead
-        ? `
-          <p class="result-date">
-            Read on ${escapeHtml(data.dateRead)}
-          </p>
-        `
-        : ''
-    }
 
   `;
 
-
-  result.classList.remove(
-    'hidden'
-  );
-
 }
 
 
-function showNotReadResult(
-  person,
-  book
+function showError(
+  message
 ) {
 
-  result.innerHTML = `
-
-    <div class="result-icon not-read">
-      ?
-    </div>
-
-    <h2 class="result-title">
-      Not found
-    </h2>
-
-    <p class="result-author">
-      ${escapeHtml(person)}
-      hasn't read
-      "${escapeHtml(book)}"
-      according to the reading list.
-    </p>
-
-  `;
-
-
-  result.classList.remove(
-    'hidden'
-  );
-
-}
-
-
-function hideResult() {
-
-  result.classList.add(
-    'hidden'
-  );
-
-}
-
-
-function showError(message) {
-
-  error.textContent =
+  errorElement.textContent =
     message;
 
-  error.classList.remove(
+  errorElement.classList.remove(
     'hidden'
   );
 
@@ -228,24 +457,8 @@ function showError(message) {
 
 function hideError() {
 
-  error.classList.add(
+  errorElement.classList.add(
     'hidden'
   );
-
-}
-
-
-/**
- * Prevent book data from being interpreted
- * as HTML.
- */
-function escapeHtml(value) {
-
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
 
 }
