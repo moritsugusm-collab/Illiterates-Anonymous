@@ -19,19 +19,19 @@ const API_URL =
 const TITLES = [
 
   {
-    title: "Harry Potter",
+    title: "Bass' Book List",
 
     books: [
-      "3",
+      "43352954",
       "5",
       "6"
     ],
 
     image1:
-      "images/harry-potter-not-read.jpg",
+      "images/big-x.jpg",
 
     image2:
-      "images/harry-potter-read.jpg"
+      "images/smiley.jpg"
   },
 
 
