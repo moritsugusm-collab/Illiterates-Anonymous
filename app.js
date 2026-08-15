@@ -197,12 +197,19 @@ function requestReadBooks(
 
 
   /*
-   * Create JSONP callback.
+   * Create the callback that Google Apps Script
+   * will call.
    */
   window[callbackName] =
     function(data) {
 
       try {
+
+        console.log(
+          'Book API response:',
+          data
+        );
+
 
         if (!data.success) {
 
@@ -212,12 +219,12 @@ function requestReadBooks(
           );
 
           return;
+
         }
 
 
         /*
-         * Store all Goodreads IDs
-         * that this person has read.
+         * Store IDs the person has read.
          */
         const readIds =
           new Set();
@@ -229,7 +236,7 @@ function requestReadBooks(
             if (result.read) {
 
               readIds.add(
-                result.id
+                String(result.id)
               );
 
             }
@@ -242,52 +249,70 @@ function requestReadBooks(
           readIds
         );
 
+
       } finally {
 
         delete window[
           callbackName
         ];
 
-        script.remove();
+        if (script) {
+          script.remove();
+        }
 
       }
 
     };
 
 
+  /*
+   * Create a script tag.
+   *
+   * This is JSONP and avoids the
+   * cross-origin restriction between
+   * GitHub Pages and Apps Script.
+   */
   const script =
     document.createElement(
       'script'
     );
 
 
-  const encodedPerson =
-    encodeURIComponent(
-      person
-    );
-
-
-  const encodedIds =
-    encodeURIComponent(
-      ids.join(',')
-    );
-
-
-  script.src =
+  const url =
     API_URL +
     '?person=' +
-    encodedPerson +
+    encodeURIComponent(person) +
     '&ids=' +
-    encodedIds +
-    '&callback=' +
-    callbackName;
+    encodeURIComponent(
+      ids.join(',')
+    ) +
+    '&prefix=' +
+    encodeURIComponent(
+      callbackName
+    );
+
+
+  console.log(
+    'Calling book API:',
+    url
+  );
+
+
+  script.src = url;
 
 
   script.onerror =
     function() {
 
+      console.error(
+        'Could not load Apps Script API:',
+        url
+      );
+
+
       showError(
-        'Unable to connect to the book database.'
+        'Unable to connect to the book database. ' +
+        'Check the Apps Script deployment.'
       );
 
 
