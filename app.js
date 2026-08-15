@@ -27,7 +27,7 @@ const TITLES = [
     ],
 
     image1:
-       "images/harry-potter-not-read.jpg",
+       "images/empty-bookmark.png",
 
     image2:
       "images/smiley.jpg"
@@ -44,7 +44,7 @@ const TITLES = [
     ],
 
     image1:
-      "images/empty-bookmark.png",
+       "images/empty-bookmark.png",
 
     image2:
       "images/dune-read.jpg"
@@ -61,7 +61,7 @@ const TITLES = [
     ],
 
     image1:
-      "images/empty-bookmark.png",
+       "images/empty-bookmark.png",
 
     image2:
       "images/lotr-read.jpg"
