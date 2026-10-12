@@ -8,48 +8,35 @@
   <li><a href="about.asp">About</a></li>
 </ul>
   
-<head>
-
+<head> <!--This is the header of the page-->
   <meta charset="UTF-8">
-
-  <meta
+  <meta 
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   >
-
-  <title>Book Checker</title>
-
+  <title>Book Checker</title> <!--THIS IS THE TITLE OF THE PAGE (goodreads has achievements)-->
   <link
     rel="stylesheet"
     href="style.css"
-  >
-
+  > <!-- This links the external CSS file -->
 </head>
 
 
 <body>
-
   <main class="container">
-
     <header>
-
       <h1>Books</h1>
-
       <p>
         See which books someone has read.
       </p>
-
     </header>
 
 
     <section class="person-selector">
-
       <label for="person">
         Person
       </label>
-
       <select id="person">
-
         <option value="Bass">Bass</option>
         <option value="Baxter">Baxter</option>
         <option value="Ethan">Ethan</option>
@@ -62,9 +49,7 @@
         <option value="Sam">Sam</option>
         <option value="Tira">Tira</option>
         <option value="Zaki">Zaki</option>
-
       </select>
-
     </section>
 
 
@@ -93,3 +78,98 @@
 </body>
 
 </html>
+
+<!--THE NEW SCRIPT-->
+
+<body>
+  <main class="achievements">
+
+    <div class="heading">
+      <span id="progress">0 of 11 achievements collected</span>
+      <span
+        class="info"
+        title="Collect achievements as you read"
+        aria-label="Information about achievements"
+      >i</span>
+    </div>
+
+    <section class="grid" aria-label="Reading achievements">
+
+      <article class="achievement">
+        <div class="bookmark-wrap">
+          <span class="ribbon"></span>
+          <div class="bookmark"></div>
+        </div>
+        <span class="name">Page-Turner</span>
+      </article>
+
+      <article class="achievement">
+        <div class="bookmark-wrap">
+          <span class="ribbon"></span>
+          <div class="bookmark"></div>
+        </div>
+        <span class="name">Speed Reader</span>
+      </article>
+
+      <article class="achievement">
+        <div class="bookmark-wrap">
+          <span class="ribbon"></span>
+          <div class="bookmark"></div>
+        </div>
+        <span class="name">Book Boss</span>
+      </article>
+
+      <article class="achievement">
+        <div class="bookmark-wrap">
+          <span class="ribbon"></span>
+          <div class="bookmark"></div>
+          <span class="oprah-emblem"></span>
+        </div>
+        <span class="name">Oprah's Picks</span>
+      </article>
+
+      <article class="achievement">
+        <div class="bookmark-wrap">
+          <span class="ribbon"></span>
+          <div class="bookmark"></div>
+        </div>
+        <span class="name">Hispanic Heritage</span>
+      </article>
+
+      <article class="achievement">
+        <div class="bookmark-wrap">
+          <span class="ribbon"></span>
+          <div class="bookmark"></div>
+        </div>
+        <span class="name">Decade of Reads</span>
+      </article>
+
+      <article class="achievement">
+        <div class="bookmark-wrap">
+          <span class="ribbon"></span>
+          <div class="bookmark"></div>
+        </div>
+        <span class="name">Spellbound</span>
+      </article>
+
+      <article class="achievement">
+        <div class="bookmark-wrap">
+          <span class="ribbon"></span>
+          <div class="bookmark"></div>
+        </div>
+        <span class="name">Spine Tinglers</span>
+      </article>
+
+      <article class="achievement">
+        <div class="bookmark-wrap">
+          <span class="ribbon"></span>
+          <div class="bookmark"></div>
+        </div>
+        <span class="name">Heart-Warmers</span>
+      </article>
+
+    </section>
+  </main>
+</body>
+</html>
+
