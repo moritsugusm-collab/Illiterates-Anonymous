@@ -180,6 +180,203 @@ body {
 
 
 /* =================================
+   Clickable bookmark titles
+================================= */
+.book {
+  cursor: pointer;
+}
+
+.book:focus-visible {
+  outline: 2px solid #777ce9;
+  outline-offset: 5px;
+}
+
+/* Popup overlay */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+  background: rgba(20, 18, 30, 0.65);
+  overflow-y: auto;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Popup panel */
+.modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  padding: 30px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+}
+
+.modal-content h2 {
+  margin: 0 35px 24px 0;
+  font-size: 25px;
+  font-weight: 400;
+}
+
+.modal-content h3 {
+  margin: 28px 0 16px;
+  font-size: 17px;
+  font-weight: 400;
+}
+
+/* Close button */
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+
+  border: none;
+  background: transparent;
+  color: #555;
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: #000;
+}
+
+/* Large bookmark and description */
+.modal-feature {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+#modalBookmark {
+  display: block;
+  flex: 0 0 auto;
+  width: 90px;
+  height: 220px;
+  object-fit: contain;
+}
+
+#modalDescription {
+  margin: 0;
+  color: #555;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* Book cover grid */
+.modal-books {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.modal-book {
+  min-width: 0;
+  color: #222;
+  text-align: center;
+}
+
+.modal-book a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.modal-book a:hover .modal-cover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+.modal-cover {
+  display: block;
+  width: 100%;
+  max-width: 150px;
+  height: 200px;
+  margin: 0 auto 12px;
+  border-radius: 4px;
+  object-fit: contain;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.modal-book-title {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.modal-book-author {
+  margin: 0;
+  color: #666;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* Mobile popup */
+@media (max-width: 500px) {
+  .modal {
+    padding: 10px;
+    align-items: center;
+  }
+
+  .modal-content {
+    padding: 22px 16px;
+    max-height: 92vh;
+    border-radius: 10px;
+  }
+
+  .modal-content h2 {
+    font-size: 21px;
+  }
+
+  .modal-feature {
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  #modalBookmark {
+    width: 60px;
+    height: 150px;
+  }
+
+  #modalDescription {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .modal-books {
+    gap: 10px;
+  }
+
+  .modal-cover {
+    height: 145px;
+  }
+
+  .modal-book-title {
+    font-size: 12px;
+  }
+
+  .modal-book-author {
+    font-size: 11px;
+  }
+}
+
+
+/* =================================
    RESPONSIVE LAYOUT
 ================================= */
 
