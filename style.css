@@ -279,13 +279,20 @@ body {
 /* Book cover grid */
 .modal-books {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(90px, 1fr)
+  );
+  gap: 24px 16px;
+  align-items: start;
+  justify-items: center;
+  width: 100%;
 }
 
 .modal-book {
+  width: 100%;
   min-width: 0;
-  color: #222;
+  max-width: 160px;
   text-align: center;
 }
 
@@ -308,6 +315,7 @@ body {
   margin: 0 auto 12px;
   border-radius: 4px;
   object-fit: contain;
+  object-position: center;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -358,13 +366,17 @@ body {
     line-height: 1.6;
   }
 
-  .modal-books {
-    gap: 10px;
+   .modal-books {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px 10px;
+  }
+
+  .modal-book {
+    max-width: none;
   }
 
   .modal-cover {
     height: 145px;
-  }
 
   .modal-book-title {
     font-size: 12px;
