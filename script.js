@@ -17,7 +17,6 @@ const API_URL =
  * image2 = user has read AT LEAST ONE book
  */
 const TITLES = [
-
   {
     title: "Bass' Book List",
 
@@ -28,7 +27,7 @@ const TITLES = [
     ],
 
     image1: "images/empty-bookmark.png",
-    image2: "images/smiley.jpg"
+    image2: "images/smiley.jpg",
 
    description: "Bass' books are here",
 
@@ -52,8 +51,8 @@ const TITLES = [
       cover: "images/blank.jpg"
     }
   ]
-}
-  },
+ }
+],
 
 
   {
@@ -105,9 +104,9 @@ const TITLES = [
 
     image1:
        "images/empty-bookmark.png",
-
     image2:
-      "images/lotr-read.jpg"
+      "images/lotr-read.jpg",
+       
   description:
     "she lord on my rings til my towers whatever man.",
 
