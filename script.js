@@ -27,29 +27,71 @@ const TITLES = [
       "6"
     ],
 
-    image1:
-       "images/empty-bookmark.png",
+    image1: "images/empty-bookmark.png",
+    image2: "images/smiley.jpg"
 
-    image2:
-      "images/smiley.jpg"
+   description: "Bass' books are here",
+
+  bookDetails: [
+    {
+      id: "43352954",
+      title: "This is How You Lose The Time War",
+      author: "AEM",
+      cover: "images/time-war.jpg"
+    },
+    {
+      id: "5",
+      title: "azkaban",
+      author: "JKR again",
+      cover: "images/blank.jpg"
+    },
+    {
+      id: "6",
+      title: "Goblet of Fire apparently",
+      author: "JKR",
+      cover: "images/blank.jpg"
+    }
+  ]
+}
   },
 
 
   {
-    title: "Dune",
+  title: "Dune",
 
-    books: [
-      "234225",
-      "44767458",
-      "36346344"
-    ],
+  books: [
+    "234225",
+    "44767458",
+    "36346344"
+  ],
 
-    image1:
-       "images/empty-bookmark.png",
+  image1: "images/empty-bookmark.png",
+  image2: "images/smiley.jpg",
 
-    image2:
-      "images/dune-read.jpg"
-  },
+  description:
+    "Explore the epic science-fiction saga of Arrakis, political intrigue, powerful families, and the struggle for control of the universe.",
+
+  bookDetails: [
+    {
+      id: "234225",
+      title: "Dune",
+      author: "Frank Herbert",
+      cover: "images/blank.jpg"
+    },
+    {
+      id: "44767458",
+      title: "Dune Messiah",
+      author: "Frank Herbert",
+      cover: "images/blank.jpg"
+    },
+    {
+      id: "36346344",
+      title: "Children of Dune",
+      author: "Frank Herbert",
+      cover: "images/blank.jpg"
+    }
+  ]
+},
 
 
   {
@@ -66,7 +108,30 @@ const TITLES = [
 
     image2:
       "images/lotr-read.jpg"
-  }
+  description:
+    "she lord on my rings til my towers whatever man.",
+
+  bookDetails: [
+    {
+      id: "33",
+      title: "LOTR",
+      author: "JRRT",
+      cover: "images/blank.jpg"
+    },
+    {
+      id: "15241",
+      title: "LOTR 2",
+      author: "JRRT",
+      cover: "images/blank.jpg"
+    },
+    {
+      id: "117499",
+      title: "threequel",
+      author: "Jolkien Rolkein Rolkein Tolkein",
+      cover: "images/blank.jpg"
+    }
+  ]
+},
 
 ];
 
@@ -331,6 +396,9 @@ function displayBooks(
     bookElement.className =
       'book';
 
+   bookElement.setAttribute('role', 'button');
+   bookElement.setAttribute('tabindex', '0');
+
 
     /*
      * Title.
@@ -399,7 +467,20 @@ function displayBooks(
     bookElement.appendChild(
       image
     );
-
+   
+    // Open the popup when a bookmark is clicked.
+    function openThisBookmark() {
+      openBookModal(item, hasBeenRead);
+    }
+    
+    bookElement.addEventListener('click', openThisBookmark);
+    
+    bookElement.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openThisBookmark();
+      }
+    });
 
     bookList.appendChild(
       bookElement
@@ -450,3 +531,111 @@ function hideError() {
   );
 
 }
+
+/* =================================
+   BOOKMARK DETAILS POPUP
+================================= */
+
+const bookModal = document.getElementById('bookModal');
+const modalClose = document.getElementById('modalClose');
+const modalTitle = document.getElementById('modalTitle');
+const modalBookmark = document.getElementById('modalBookmark');
+const modalDescription = document.getElementById('modalDescription');
+const modalBooks = document.getElementById('modalBooks');
+
+let previouslyFocusedElement = null;
+
+function openBookModal(item, hasBeenRead) {
+  previouslyFocusedElement = document.activeElement;
+
+  // Set the popup title and description.
+  modalTitle.textContent = item.title;
+  modalDescription.textContent =
+    item.description || 'Explore the books in this collection.';
+
+  // Show the same bookmark image used in the grid.
+  modalBookmark.src = hasBeenRead ? item.image2 : item.image1;
+  modalBookmark.alt = item.title + ' bookmark';
+
+  // Clear previous book covers.
+  modalBooks.replaceChildren();
+
+  // Add up to three book covers.
+  const books = (item.bookDetails || []).slice(0, 3);
+
+  books.forEach(book => {
+    const card = document.createElement('article');
+    card.className = 'modal-book';
+
+    const link = document.createElement('a');
+    link.href =
+      'https://www.goodreads.com/book/show/' +
+      encodeURIComponent(book.id);
+
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.setAttribute(
+      'aria-label',
+      'View ' + book.title + ' on Goodreads'
+    );
+
+    const cover = document.createElement('img');
+    cover.className = 'modal-cover';
+    cover.src = book.cover;
+    cover.alt = 'Cover of ' + book.title;
+    cover.loading = 'lazy';
+
+    const title = document.createElement('p');
+    title.className = 'modal-book-title';
+    title.textContent = book.title;
+
+    const author = document.createElement('p');
+    author.className = 'modal-book-author';
+    author.textContent = book.author;
+
+    link.appendChild(cover);
+    link.appendChild(title);
+    link.appendChild(author);
+    card.appendChild(link);
+    modalBooks.appendChild(card);
+  });
+
+  if (books.length === 0) {
+    const message = document.createElement('p');
+    message.textContent = 'No book details have been added yet.';
+    modalBooks.appendChild(message);
+  }
+
+  bookModal.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  modalClose.focus();
+}
+
+function closeBookModal() {
+  bookModal.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+
+  if (previouslyFocusedElement) {
+    previouslyFocusedElement.focus();
+  }
+}
+
+// Close with the X button.
+modalClose.addEventListener('click', closeBookModal);
+
+// Close by clicking the dark background.
+bookModal.addEventListener('click', event => {
+  if (event.target === bookModal) {
+    closeBookModal();
+  }
+});
+
+// Close with Escape.
+document.addEventListener('keydown', event => {
+  if (
+    event.key === 'Escape' &&
+    !bookModal.classList.contains('hidden')
+  ) {
+    closeBookModal();
+  }
+});
