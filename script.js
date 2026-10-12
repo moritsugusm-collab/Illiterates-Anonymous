@@ -536,7 +536,7 @@ function openBookModal(item, hasBeenRead) {
   modalBooks.replaceChildren();
 
   // Add up to three book covers.
-  const books = (item.bookDetails || []).slice(0, 3);
+  const books = (item.bookDetails || []).slice(0, 5);
 
   books.forEach(book => {
     const card = document.createElement('article');
