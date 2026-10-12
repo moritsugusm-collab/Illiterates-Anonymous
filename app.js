@@ -186,149 +186,111 @@ function checkAllBooks() {
  * ============================================================
  */
 
-function requestReadBooks(
-  person,
-  ids
-) {
-
+function requestReadBooks(person, ids) {
   const callbackName =
     'goodreadsCallback_' +
-    Date.now();
+    Date.now() +
+    '_' +
+    Math.floor(Math.random() * 100000);
 
+  const script = document.createElement('script');
+  let finished = false;
 
-  /*
-   * Create the callback that Google Apps Script
-   * will call.
-   */
-  window[callbackName] =
-    function(data) {
+  // Remove the script and callback when finished.
+  function cleanup() {
+    finished = true;
+    clearTimeout(timeout);
+    delete window[callbackName];
+    script.remove();
+  }
 
-      try {
+  // Display an error instead of waiting forever.
+  function fail(message) {
+    if (finished) return;
 
-        console.log(
-          'Book API response:',
-          data
+    cleanup();
+    showError(message);
+  }
+
+  // Apps Script calls this function through JSONP.
+  window[callbackName] = function (data) {
+    if (finished) return;
+
+    try {
+      console.log('Book API response:', data);
+
+      if (!data || data.success !== true) {
+        fail(
+          data?.error ||
+          'The API returned an unsuccessful response. Check Apps Script.'
         );
-
-
-        if (!data.success) {
-
-          showError(
-            data.error ||
-            'Unable to check books.'
-          );
-
-          return;
-
-        }
-
-
-        /*
-         * Store IDs the person has read.
-         */
-        const readIds =
-          new Set();
-
-
-        data.results.forEach(
-          result => {
-
-            if (result.read) {
-
-              readIds.add(
-                String(result.id)
-              );
-
-            }
-
-          }
-        );
-
-
-        displayBooks(
-          readIds
-        );
-
-
-      } finally {
-
-        delete window[
-          callbackName
-        ];
-
-        if (script) {
-          script.remove();
-        }
-
+        return;
       }
 
-    };
+      if (!Array.isArray(data.results)) {
+        fail(
+          'The API response is missing its results array.'
+        );
+        return;
+      }
 
+      const readIds = new Set();
 
-  /*
-   * Create a script tag.
-   *
-   * This is JSONP and avoids the
-   * cross-origin restriction between
-   * GitHub Pages and Apps Script.
-   */
-  const script =
-    document.createElement(
-      'script'
+      data.results.forEach(result => {
+        if (result.read) {
+          readIds.add(String(result.id).trim());
+        }
+      });
+
+      cleanup();
+      hideError();
+      displayBooks(readIds);
+
+    } catch (error) {
+      console.error('Error processing API response:', error);
+
+      fail('The book data could not be processed.');
+    }
+  };
+
+  // Detect requests that never return.
+  const timeout = setTimeout(() => {
+    fail(
+      'The book database did not respond within 15 seconds. ' +
+      'Check your Apps Script URL and deployment.'
     );
+  }, 15000);
 
+  // Detect network or script-loading failures.
+  script.onerror = function () {
+    console.error('Failed to load Apps Script:', script.src);
+
+    fail(
+      'Could not load the book database. ' +
+      'Check the Apps Script deployment and permissions.'
+    );
+  };
+
+  // Detect a response that loads but never calls our callback.
+  script.onload = function () {
+    if (!finished && typeof window[callbackName] === 'function') {
+      fail(
+        'The API loaded but did not return the expected callback. ' +
+        'Check the prefix parameter and JSONP response.'
+      );
+    }
+  };
 
   const url =
     API_URL +
-    '?person=' +
-    encodeURIComponent(person) +
-    '&ids=' +
-    encodeURIComponent(
-      ids.join(',')
-    ) +
-    '&prefix=' +
-    encodeURIComponent(
-      callbackName
-    );
+    '?person=' + encodeURIComponent(person) +
+    '&ids=' + encodeURIComponent(ids.join(',')) +
+    '&prefix=' + encodeURIComponent(callbackName);
 
-
-  console.log(
-    'Calling book API:',
-    url
-  );
-
+  console.log('Calling book API:', url);
 
   script.src = url;
-
-
-  script.onerror =
-    function() {
-
-      console.error(
-        'Could not load Apps Script API:',
-        url
-      );
-
-
-      showError(
-        'Unable to connect to the book database. ' +
-        'Check the Apps Script deployment.'
-      );
-
-
-      delete window[
-        callbackName
-      ];
-
-      script.remove();
-
-    };
-
-
-  document
-    .body
-    .appendChild(script);
-
+  document.body.appendChild(script);
 }
 
 
