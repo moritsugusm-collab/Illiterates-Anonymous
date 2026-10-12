@@ -15,9 +15,10 @@ body {
 }
 
 .achievements {
-  width: min(100%, 460px);
-  margin: 5px auto 30px;
-  padding: 0 12px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 16px auto 40px;
+  padding: 0 24px;
 }
 
 
@@ -88,8 +89,8 @@ body {
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  column-gap: 18px;
-  row-gap: 14px;
+  column-gap: 32px;
+  row-gap: 36px;
   justify-items: center;
   align-items: start;
 }
@@ -117,11 +118,12 @@ body {
 .book-title {
   order: 0;
   max-width: 100%;
-  margin-top: 8px;
+  margin-top: 12px;
   color: #171717;
-  font-size: 9px;
+  font-size: clamp(12px, 1.4vw, 16px);
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1.4;
+  text-align: center;
   overflow-wrap: anywhere;
 }
 
@@ -133,13 +135,15 @@ body {
 .read-image {
   order: 1;
   display: block;
-  width: 26px;
-  height: 77px;
+
+  width: clamp(48px, 7vw, 90px);
+  height: clamp(120px, 18vw, 180px);
+
   max-width: 100%;
   object-fit: contain;
   object-position: center;
   border: none;
-  border-radius: 3px 3px 0 0;
+  border-radius: 4px 4px 0 0;
 }
 
 
@@ -179,24 +183,44 @@ body {
    RESPONSIVE LAYOUT
 ================================= */
 
-@media (max-width: 360px) {
+/* Tablets and smaller screens */
+@media (max-width: 700px) {
   .achievements {
-  width: 100%;
-  max-width: 1100px;
-  margin: 16px auto 40px;
-  padding: 0 24px;
-}
+    padding: 0 16px 30px;
+  }
 
   .grid {
-    column-gap: 6px;
-    row-gap: 16px;
+    column-gap: 18px;
+    row-gap: 28px;
+  }
+
+  .read-image {
+    width: clamp(42px, 10vw, 65px);
+    height: clamp(105px, 25vw, 140px);
   }
 
   .book-title {
-    font-size: 8px;
-  }
-
-  .person-selector {
-    flex-direction: column;
+    font-size: 12px;
   }
 }
+
+/* Small mobile phones */
+@media (max-width: 380px) {
+  .achievements {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .grid {
+    column-gap: 8px;
+    row-gap: 24px;
+  }
+
+  .read-image {
+    width: 38px;
+    height: 100px;
+  }
+
+  .book-title {
+    font-size: 11px;
+  }
