@@ -524,6 +524,10 @@ body.modal-open {
   display: none;
 }
 
+.menu-overlay:not([hidden]) ~ .menu-open {
+  display: none;
+}
+
 /* Keep title and options on the right */
 .menu-layout {
   width: 70%;
