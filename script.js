@@ -73,13 +73,13 @@ const TITLES = [
         title: "Children of Dune",
         author: "Frank Herbert",
         cover: "images/blank.jpg"
-      }
+      },
       {
         id: "44439415",
         title: "God Emperor of Dune",
         author: "Frank Herbert",
         cover: "images/blank.jpg"
-      }
+      },
      {
         id: "44492287",
         title: "Heretics of Dune",
