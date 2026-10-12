@@ -76,5 +76,38 @@
     <p id="error" class="error hidden" role="alert"></p>
 
   </main>
+
+<!-- Achievement details popup -->
+<div
+  id="bookModal"
+  class="modal hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="modalTitle"
+>
+  <div class="modal-content">
+
+    <button
+      id="modalClose"
+      class="modal-close"
+      type="button"
+      aria-label="Close popup"
+    >&times;</button>
+
+    <h2 id="modalTitle"></h2>
+
+    <div class="modal-feature">
+      <img id="modalBookmark" src="" alt="Achievement bookmark">
+
+      <p id="modalDescription"></p>
+    </div>
+
+    <h3>Books in this collection</h3>
+
+    <div id="modalBooks" class="modal-books"></div>
+
+  </div>
+</div>
+  
 </body>
 </html>
