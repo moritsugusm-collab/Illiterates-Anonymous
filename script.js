@@ -48,7 +48,7 @@ const TITLES = [
 
   {
     title: "Dune",
-    books: ["234225", "44767458", "36346344"],
+    books: ["234225", "44767458", "36346344", "44439415", "44492287"],
     image1: "images/empty-bookmark.png",
     image2: "images/smiley.jpg",
 
@@ -71,6 +71,18 @@ const TITLES = [
       {
         id: "36346344",
         title: "Children of Dune",
+        author: "Frank Herbert",
+        cover: "images/blank.jpg"
+      }
+      {
+        id: "44439415",
+        title: "God Emperor of Dune",
+        author: "Frank Herbert",
+        cover: "images/blank.jpg"
+      }
+     {
+        id: "44492287",
+        title: "Heretics of Dune",
         author: "Frank Herbert",
         cover: "images/blank.jpg"
       }
