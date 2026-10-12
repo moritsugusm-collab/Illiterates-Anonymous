@@ -19,11 +19,11 @@
     rel="stylesheet"
     href="style.css"
   > <!-- This links the external CSS file -->
+  <script src="script.js" defer></script> <!-- this links the JS script?-->
 </head>
-
-
+  
 <body>
-  <main class="container">
+  <main class="achievements">
     <header>
       <h1>Books</h1>
       <p>
@@ -31,12 +31,12 @@
       </p>
     </header>
 
+        <!-- Person selector -->
+    <div class="person-selector">
+      <label for="person">Select a reader</label>
 
-    <section class="person-selector">
-      <label for="person">
-        Person
-      </label>
-      <select id="person">
+      <select id="person" name="person">
+        <option value="">Choose a person...</option>
         <option value="Bass">Bass</option>
         <option value="Baxter">Baxter</option>
         <option value="Ethan">Ethan</option>
@@ -50,126 +50,34 @@
         <option value="Tira">Tira</option>
         <option value="Zaki">Zaki</option>
       </select>
-    </section>
+    </div>
 
+    <!-- Page heading -->
+    <header class="heading">
+      <span>Reading Achievements</span>
 
-    <div
+      <span
+        class="info"
+        title="Achievements update based on the selected reader's books."
+        aria-label="Information"
+      >i</span>
+    </header>
+
+    <!-- Your JavaScript inserts the book tiles here -->
+    <section
       id="bookList"
-      class="book-list"
-    >
+      class="grid"
+      aria-label="Reading achievements"
+      aria-live="polite"
+    ></section>
 
       <div class="loading">
         Checking books...
       </div>
+    
+    <!-- Your JavaScript displays errors here -->
+    <p id="error" class="error hidden" role="alert"></p>
 
-    </div>
-
-
-    <div
-      id="error"
-      class="error hidden"
-    ></div>
-
-  </main>
-
-
-  <script src="app.js"></script>
-
-</body>
-
-</html>
-
-<!--THE NEW SCRIPT-->
-
-<body>
-  <main class="achievements">
-
-    <div class="heading">
-      <span id="progress">0 of 11 achievements collected</span>
-      <span
-        class="info"
-        title="Collect achievements as you read"
-        aria-label="Information about achievements"
-      >i</span>
-    </div>
-
-    <section class="grid" aria-label="Reading achievements">
-
-      <article class="achievement">
-        <div class="bookmark-wrap">
-          <span class="ribbon"></span>
-          <div class="bookmark"></div>
-        </div>
-        <span class="name">Page-Turner</span>
-      </article>
-
-      <article class="achievement">
-        <div class="bookmark-wrap">
-          <span class="ribbon"></span>
-          <div class="bookmark"></div>
-        </div>
-        <span class="name">Speed Reader</span>
-      </article>
-
-      <article class="achievement">
-        <div class="bookmark-wrap">
-          <span class="ribbon"></span>
-          <div class="bookmark"></div>
-        </div>
-        <span class="name">Book Boss</span>
-      </article>
-
-      <article class="achievement">
-        <div class="bookmark-wrap">
-          <span class="ribbon"></span>
-          <div class="bookmark"></div>
-          <span class="oprah-emblem"></span>
-        </div>
-        <span class="name">Oprah's Picks</span>
-      </article>
-
-      <article class="achievement">
-        <div class="bookmark-wrap">
-          <span class="ribbon"></span>
-          <div class="bookmark"></div>
-        </div>
-        <span class="name">Hispanic Heritage</span>
-      </article>
-
-      <article class="achievement">
-        <div class="bookmark-wrap">
-          <span class="ribbon"></span>
-          <div class="bookmark"></div>
-        </div>
-        <span class="name">Decade of Reads</span>
-      </article>
-
-      <article class="achievement">
-        <div class="bookmark-wrap">
-          <span class="ribbon"></span>
-          <div class="bookmark"></div>
-        </div>
-        <span class="name">Spellbound</span>
-      </article>
-
-      <article class="achievement">
-        <div class="bookmark-wrap">
-          <span class="ribbon"></span>
-          <div class="bookmark"></div>
-        </div>
-        <span class="name">Spine Tinglers</span>
-      </article>
-
-      <article class="achievement">
-        <div class="bookmark-wrap">
-          <span class="ribbon"></span>
-          <div class="bookmark"></div>
-        </div>
-        <span class="name">Heart-Warmers</span>
-      </article>
-
-    </section>
   </main>
 </body>
 </html>
-
