@@ -1,245 +1,200 @@
+/* =================================
+   GENERAL STYLES
+================================= */
+
 * {
   box-sizing: border-box;
 }
 
-
 body {
   margin: 0;
-
   min-height: 100vh;
+  background: #fff;
+  color: #171717;
+  font-family: Georgia, "Times New Roman", serif;
+}
 
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-
-  background:
-    linear-gradient(
-      135deg,
-      #f5f1e8,
-      #e8eef5
-    );
-
-  color: #202124;
+.achievements {
+  width: min(100%, 460px);
+  margin: 5px auto 30px;
+  padding: 0 12px;
 }
 
 
-.container {
-  width: min(600px, calc(100% - 32px));
+/* =================================
+   PERSON SELECTOR
+================================= */
 
-  margin: 0 auto;
-
-  padding-top: 80px;
-}
-
-
-h1 {
-  margin-bottom: 8px;
-
-  font-size: 38px;
-
-  letter-spacing: -1px;
-}
-
-
-.subtitle {
-  margin-top: 0;
-
-  color: #666;
-}
-
-
-.search-card {
-  margin-top: 32px;
-
-  padding: 28px;
-
-  background: white;
-
-  border-radius: 18px;
-
-  box-shadow:
-    0 10px 30px
-    rgba(0, 0, 0, 0.08);
-}
-
-
-label {
-  display: block;
-
-  margin-bottom: 8px;
-
-  font-weight: 600;
-}
-
-
-select,
-input {
-  width: 100%;
-
-  padding: 13px 14px;
-
-  margin-bottom: 20px;
-
-  font-size: 16px;
-
-  border: 1px solid #d0d0d0;
-
-  border-radius: 10px;
-
-  background: white;
-}
-
-
-.search-row {
+.person-selector {
   display: flex;
-
-  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
 }
 
-
-.search-row input {
-  margin-bottom: 0;
+.person-selector label {
+  color: #555;
 }
 
-
-button {
-  padding: 0 22px;
-
-  border: none;
-
-  border-radius: 10px;
-
-  background: #3b5ccc;
-
-  color: white;
-
-  font-size: 16px;
-
-  font-weight: 600;
-
+.person-selector select {
+  max-width: 100%;
+  padding: 5px 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #fff;
+  color: #333;
+  font: inherit;
   cursor: pointer;
 }
 
 
-button:hover {
-  background: #304db0;
-}
+/* =================================
+   HEADING
+================================= */
 
-
-button:disabled {
-  opacity: 0.6;
-
-  cursor: wait;
-}
-
-
-.result {
-  margin-top: 24px;
-
-  padding: 28px;
-
-  background: white;
-
-  border-radius: 18px;
-
-  text-align: center;
-
-  box-shadow:
-    0 10px 30px
-    rgba(0, 0, 0, 0.08);
-}
-
-
-.result-icon {
-  width: 76px;
-  height: 76px;
-
-  margin: 0 auto 16px;
-
+.heading {
   display: flex;
-
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  font-weight: 400;
+  text-align: center;
+}
 
+.info {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 12px;
+  height: 12px;
+  border: 1px solid #888;
   border-radius: 50%;
-
-  font-size: 40px;
+  color: #555;
+  font: bold 8px Arial, sans-serif;
+  cursor: help;
 }
 
 
-.read {
-  background: #dcfce7;
+/* =================================
+   ACHIEVEMENT GRID
+================================= */
 
-  color: #15803d;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 18px;
+  row-gap: 14px;
+  justify-items: center;
+  align-items: start;
 }
 
 
-.not-read {
-  background: #f3f4f6;
+/* =================================
+   INDIVIDUAL BOOK TILE
+================================= */
 
-  color: #6b7280;
+.book {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+  width: 100%;
+  text-align: center;
+}
+
+/*
+  column-reverse puts the image above
+  the title, matching the reference image.
+*/
+
+.book-title {
+  order: 0;
+  max-width: 100%;
+  margin-top: 8px;
+  color: #171717;
+  font-size: 9px;
+  font-weight: 400;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
 
-.result-title {
-  margin: 0;
+/* =================================
+   BOOKMARK IMAGES
+================================= */
 
-  font-size: 24px;
+.read-image {
+  order: 1;
+  display: block;
+  width: 26px;
+  height: 77px;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+  border: none;
+  border-radius: 3px 3px 0 0;
 }
 
 
-.result-author {
-  margin-top: 6px;
+/* =================================
+   LOADING MESSAGE
+================================= */
 
-  color: #666;
-}
-
-
-.result-date {
-  margin-top: 14px;
-
+.loading {
+  grid-column: 1 / -1;
+  width: 100%;
+  padding: 25px 5px;
   color: #777;
-
-  font-size: 14px;
+  font-size: 11px;
+  text-align: center;
 }
 
 
-.hidden {
-  display: none;
-}
-
+/* =================================
+   ERROR MESSAGE
+================================= */
 
 .error {
-  margin-top: 20px;
+  margin: 18px 0;
+  color: #b42318;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
 
-  padding: 14px;
-
-  border-radius: 10px;
-
-  background: #fee2e2;
-
-  color: #991b1b;
+.hidden {
+  display: none !important;
 }
 
 
-@media (max-width: 500px) {
+/* =================================
+   RESPONSIVE LAYOUT
+================================= */
 
-  .container {
-    padding-top: 40px;
+@media (max-width: 360px) {
+  .achievements {
+    padding-right: 6px;
+    padding-left: 6px;
   }
 
-  h1 {
-    font-size: 30px;
+  .grid {
+    column-gap: 6px;
+    row-gap: 16px;
   }
 
-  .search-row {
+  .book-title {
+    font-size: 8px;
+  }
+
+  .person-selector {
     flex-direction: column;
   }
-
-  button {
-    padding: 13px;
-  }
-
 }
