@@ -1,12 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<ul>
-  <li><a href="default.asp">About</a></li>
-  <li><a href="news.asp">News</a></li>
-  <li><a href="contact.asp">Contact</a></li>
-  <li><a href="about.asp">About</a></li>
-</ul>
+<!-- Button that opens the menu -->
+<button id="menu-open" aria-controls="site-menu"
+        aria-expanded="false">
+  Explore
+</button>
+
+<!-- Full-screen navigation -->
+<nav id="site-menu" class="menu-overlay"
+     aria-label="Main navigation" hidden>
+
+  <button id="menu-close" class="menu-close"
+          aria-label="Close menu">
+    ×
+  </button>
+
+  <div class="menu-layout">
+    <h1 class="menu-heading">Nav</h1>
+
+    <a class="menu-link" href="home.html">
+      <span>Home</span>
+    </a>
+
+    <a class="menu-link" href="new-book-vote.html">
+      <span>New Book Vote</span>
+    </a>
+
+    <a class="menu-link" href="about.html">
+      <span>About</span>
+    </a>
+
+    <a class="menu-link menu-link-tilted"
+       href="bookmarks-challenge.html">
+      <span>2026 Bookmarks Challenge</span>
+    </a>
+
+    <img class="menu-plant"
+         src="images/plant-illustration.svg"
+         alt="">
+  </div>
+</nav>
   
 <head> <!--This is the header of the page-->
   <meta charset="UTF-8">
@@ -108,47 +142,6 @@
 
   </div>
 </div>
-
-<!-- Button that opens the menu -->
-<button id="menu-open" aria-controls="site-menu"
-        aria-expanded="false">
-  Explore
-</button>
-
-<!-- Full-screen navigation -->
-<nav id="site-menu" class="menu-overlay"
-     aria-label="Main navigation" hidden>
-
-  <button id="menu-close" class="menu-close"
-          aria-label="Close menu">
-    ×
-  </button>
-
-  <div class="menu-layout">
-    <h1 class="menu-heading">Nav</h1>
-
-    <a class="menu-link" href="home.html">
-      <span>Home</span>
-    </a>
-
-    <a class="menu-link" href="new-book-vote.html">
-      <span>New Book Vote</span>
-    </a>
-
-    <a class="menu-link" href="about.html">
-      <span>About</span>
-    </a>
-
-    <a class="menu-link menu-link-tilted"
-       href="bookmarks-challenge.html">
-      <span>2026 Bookmarks Challenge</span>
-    </a>
-
-    <img class="menu-plant"
-         src="images/plant-illustration.svg"
-         alt="">
-  </div>
-</nav>
   
 </body>
 </html>
