@@ -2,10 +2,6 @@
    GENERAL STYLES
 ================================= */
 
-body {
-  background: lime !important;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -588,8 +584,4 @@ body.modal-open {
   .menu-link {
     transition: none;
   }
-}
-
-.menu-overlay {
-  background: red !important;
 }
