@@ -19,120 +19,96 @@ const API_URL =
 const TITLES = [
   {
     title: "Bass' Book List",
+    books: ["43352954", "5", "6"],
+    image1: "images/empty-bookmark.png",
+    image2: "images/smiley.jpg",
+    description: "Bass' books are here",
 
-    books: [
-      "43352954",
-      "5",
-      "6"
-    ],
+    bookDetails: [
+      {
+        id: "43352954",
+        title: "This is How You Lose The Time War",
+        author: "AEM",
+        cover: "images/time-war.jpg"
+      },
+      {
+        id: "5",
+        title: "azkaban",
+        author: "JKR again",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "6",
+        title: "Goblet of Fire apparently",
+        author: "JKR",
+        cover: "images/blank.jpg"
+      }
+    ]
+  },
 
+  {
+    title: "Dune",
+    books: ["234225", "44767458", "36346344"],
     image1: "images/empty-bookmark.png",
     image2: "images/smiley.jpg",
 
-   description: "Bass' books are here",
+    description:
+      "Explore the epic science-fiction saga of Arrakis, political intrigue, powerful families, and the struggle for control of the universe.",
 
-  bookDetails: [
-    {
-      id: "43352954",
-      title: "This is How You Lose The Time War",
-      author: "AEM",
-      cover: "images/time-war.jpg"
-    },
-    {
-      id: "5",
-      title: "azkaban",
-      author: "JKR again",
-      cover: "images/blank.jpg"
-    },
-    {
-      id: "6",
-      title: "Goblet of Fire apparently",
-      author: "JKR",
-      cover: "images/blank.jpg"
-    }
-  ]
- }
-],
-
-
-  {
-  title: "Dune",
-
-  books: [
-    "234225",
-    "44767458",
-    "36346344"
-  ],
-
-  image1: "images/empty-bookmark.png",
-  image2: "images/smiley.jpg",
-
-  description:
-    "Explore the epic science-fiction saga of Arrakis, political intrigue, powerful families, and the struggle for control of the universe.",
-
-  bookDetails: [
-    {
-      id: "234225",
-      title: "Dune",
-      author: "Frank Herbert",
-      cover: "images/blank.jpg"
-    },
-    {
-      id: "44767458",
-      title: "Dune Messiah",
-      author: "Frank Herbert",
-      cover: "images/blank.jpg"
-    },
-    {
-      id: "36346344",
-      title: "Children of Dune",
-      author: "Frank Herbert",
-      cover: "images/blank.jpg"
-    }
-  ]
-},
-
+    bookDetails: [
+      {
+        id: "234225",
+        title: "Dune",
+        author: "Frank Herbert",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "44767458",
+        title: "Dune Messiah",
+        author: "Frank Herbert",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "36346344",
+        title: "Children of Dune",
+        author: "Frank Herbert",
+        cover: "images/blank.jpg"
+      }
+    ]
+  },
 
   {
     title: "The Lord of the Rings",
+    books: ["33", "15241", "117499"],
+    image1: "images/empty-bookmark.png",
+    image2: "images/lotr-read.jpg",
 
-    books: [
-      "33",
-      "15241",
-      "117499"
-    ],
+    description:
+      "She lord on my rings til my towers whatever man.",
 
-    image1:
-       "images/empty-bookmark.png",
-    image2:
-      "images/lotr-read.jpg",
-       
-  description:
-    "she lord on my rings til my towers whatever man.",
-
-  bookDetails: [
-    {
-      id: "33",
-      title: "LOTR",
-      author: "JRRT",
-      cover: "images/blank.jpg"
-    },
-    {
-      id: "15241",
-      title: "LOTR 2",
-      author: "JRRT",
-      cover: "images/blank.jpg"
-    },
-    {
-      id: "117499",
-      title: "threequel",
-      author: "Jolkien Rolkein Rolkein Tolkein",
-      cover: "images/blank.jpg"
-    }
-  ]
-},
-
+    bookDetails: [
+      {
+        id: "33",
+        title: "LOTR",
+        author: "JRRT",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "15241",
+        title: "LOTR 2",
+        author: "JRRT",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "117499",
+        title: "threequel",
+        author: "Jolkien Rolkein Rolkein Tolkein",
+        cover: "images/blank.jpg"
+      }
+    ]
+  }
 ];
+
 
 
 /**
