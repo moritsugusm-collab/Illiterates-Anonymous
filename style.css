@@ -258,7 +258,7 @@ body {
 .modal-feature {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 10px;
 }
 
 #modalBookmark {
