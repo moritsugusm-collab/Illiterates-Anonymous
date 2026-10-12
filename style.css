@@ -277,8 +277,8 @@ body {
 #modalBookmark {
   display: block;
   flex: 0 0 auto;
-  width: 212px;
-  height: 518px;
+  width: 150px;
+  height: 300px;
   object-fit: contain;
 }
 
