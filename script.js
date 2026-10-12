@@ -633,23 +633,14 @@ const menu = document.getElementById("site-menu");
 const openButton = document.getElementById("menu-open");
 const closeButton = document.getElementById("menu-close");
 
-function openMenu() {
+openButton.addEventListener("click", () => {
   menu.hidden = false;
+  openButton.hidden = true;
   openButton.setAttribute("aria-expanded", "true");
-  closeButton.focus();
-}
+});
 
-function closeMenu() {
+closeButton.addEventListener("click", () => {
   menu.hidden = true;
+  openButton.hidden = false;
   openButton.setAttribute("aria-expanded", "false");
-  openButton.focus();
-}
-
-openButton.addEventListener("click", openMenu);
-closeButton.addEventListener("click", closeMenu);
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && !menu.hidden) {
-    closeMenu();
-  }
 });
