@@ -492,7 +492,7 @@ body.modal-open {
   /*align-self: center; try to see if that'll align it properly*/
   margin: 0 auto 0 0;
   color: #075bea;
-  font: normal clamp(48px, 7vw, 100px) Gazpacho, serif;
+  font: normal clamp(73px, 10vw, 150px) Gazpacho, serif;
   flex-shrink: 0;
 }
 
@@ -513,6 +513,22 @@ body.modal-open {
   color: white;
   text-decoration: none;
   transition: transform 0.25s ease;
+}
+
+.menu-link:nth-of-type(1) {
+  height: clamp(180px, 28vh, 240px);
+}
+
+.menu-link:nth-of-type(2) {
+  height: clamp(220px, 38vh, 300px);
+}
+
+.menu-link:nth-of-type(3) {
+  height: clamp(200px, 33vh, 270px);
+}
+
+.menu-link:nth-of-type(4) {
+  height: clamp(260px, 45vh, 360px);
 }
 
 .menu-link span {
