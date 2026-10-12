@@ -80,7 +80,7 @@ const TITLES = [
         author: "Frank Herbert",
         cover: "images/blank.jpg"
       },
-     {
+      {
         id: "44492287",
         title: "Heretics of Dune",
         author: "Frank Herbert",
