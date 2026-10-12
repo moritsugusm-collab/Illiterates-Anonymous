@@ -585,3 +585,7 @@ body.modal-open {
     transition: none;
   }
 }
+
+.menu-overlay {
+  background: red !important;
+}
