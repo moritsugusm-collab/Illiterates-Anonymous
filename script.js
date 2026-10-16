@@ -336,26 +336,38 @@ const TITLES = [
     title: "Tira's Wacky Reads",
     books: ["43352954", "5", "6"],
     image1: "images/empty-bookmark.png",
-    image2: "images/smiley.jpg",
-    description: "Bass' books are here",
+    image2: "images/tiras-wacky-reads.png",
+    description: "A mix of strange, amusing, fantastical and sometimes grotesque books I’ve read and LOVED.",
 
     bookDetails: [
       {
-        id: "43352954",
-        title: "This is How You Lose The Time War",
-        author: "AEM",
-        cover: "images/time-war.jpg"
-      },
-      {
-        id: "5",
-        title: "azkaban",
-        author: "JKR again",
+        id: "6759156",
+        title: "Dorohedoro, Vol. 1",
+        author: "Q. Hayashida",
         cover: "images/blank.jpg"
       },
       {
-        id: "6",
-        title: "Goblet of Fire apparently",
-        author: "JKR",
+        id: "11970747",
+        title: "The Hedge Knight",
+        author: "George RR Martin",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "764347",
+        title: "Unwind",
+        author: "Neal Shusterman",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "13554058",
+        title: "The Wandering Earth",
+        author: "Cixin Liu",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "60840449",
+        title: "The Haar",
+        author: "David Sodergren",
         cover: "images/blank.jpg"
       }
     ]
