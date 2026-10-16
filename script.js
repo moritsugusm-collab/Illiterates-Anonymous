@@ -948,3 +948,243 @@ closeButton.addEventListener("click", () => {
   openButton.hidden = false;
   openButton.setAttribute("aria-expanded", "false");
 });
+
+
+/* =================================
+   TOP 3 BOOKMARKS LEADERBOARD
+================================= */
+
+const LEADERBOARD_PEOPLE = [
+  "Bass",
+  "Baxter",
+  "Ethan",
+  "Hayder",
+  "Karina",
+  "Lyvia",
+  "Mac",
+  "Maren",
+  "Saf",
+  "Sam",
+  "Tira",
+  "Zaki"
+];
+
+const leaderboardList =
+  document.getElementById("leaderboard-list");
+
+
+function getAllBookIds() {
+  const ids = new Set();
+
+  TITLES.forEach(item => {
+    item.books.forEach(id => {
+      ids.add(String(id).trim());
+    });
+  });
+
+  return [...ids];
+}
+
+
+// Fetch one person's read IDs without changing the main grid.
+function fetchLeaderboardReadIds(person, ids) {
+  return new Promise((resolve, reject) => {
+    const callbackName =
+      "leaderboardCallback_" +
+      Date.now() + "_" +
+      Math.floor(Math.random() * 1000000);
+
+    const script = document.createElement("script");
+    let finished = false;
+
+    const timeout = setTimeout(() => {
+      finish(new Error("Request timed out for " + person));
+    }, 20000);
+
+    function finish(error, readIds) {
+      if (finished) return;
+
+      finished = true;
+      clearTimeout(timeout);
+      delete window[callbackName];
+      script.remove();
+
+      if (error) {
+        reject(error);
+      } else {
+        resolve(readIds);
+      }
+    }
+
+    window[callbackName] = data => {
+      if (!data || data.success !== true) {
+        finish(
+          new Error(
+            data?.error || "Could not load data for " + person
+          )
+        );
+        return;
+      }
+
+      if (!Array.isArray(data.results)) {
+        finish(new Error("Invalid results for " + person));
+        return;
+      }
+
+      const readIds = new Set();
+
+      data.results.forEach(result => {
+        if (result.read) {
+          readIds.add(String(result.id).trim());
+        }
+      });
+
+      finish(null, readIds);
+    };
+
+    script.onerror = () => {
+      finish(new Error("Network error for " + person));
+    };
+
+    script.onload = () => {
+      if (!finished) {
+        finish(
+          new Error("No callback received for " + person)
+        );
+      }
+    };
+
+    script.src =
+      API_URL +
+      "?person=" + encodeURIComponent(person) +
+      "&ids=" + encodeURIComponent(ids.join(",")) +
+      "&prefix=" + encodeURIComponent(callbackName);
+
+    document.body.appendChild(script);
+  });
+}
+
+
+// Count how many collections each person has collected.
+function countCollectedBookmarks(readIds) {
+  return TITLES.reduce((count, item) => {
+    const collected = item.books.some(id =>
+      readIds.has(String(id).trim())
+    );
+
+    return count + (collected ? 1 : 0);
+  }, 0);
+}
+
+
+function getRankLabel(rank) {
+  if (rank === 1) return "1st";
+  if (rank === 2) return "2nd";
+  if (rank === 3) return "3rd";
+
+  return rank + "th";
+}
+
+
+function renderLeaderboard(results) {
+  leaderboardList.replaceChildren();
+
+  if (results.length === 0) {
+    leaderboardList.textContent =
+      "No leaderboard results are available.";
+    return;
+  }
+
+  // Highest score first; alphabetical order for equal scores.
+  results.sort((a, b) =>
+    b.count - a.count || a.person.localeCompare(b.person)
+  );
+
+  const topScore = results[0].count;
+
+  // Standard competition ranking: 1, 2, 2, 4.
+  let previousCount = null;
+  let currentRank = 0;
+
+  results.forEach((result, index) => {
+    if (result.count !== previousCount) {
+      currentRank = index + 1;
+      previousCount = result.count;
+    }
+
+    result.rank = currentRank;
+  });
+
+  // Include everyone tied for a position in the top three.
+  const topThree = results.filter(result => result.rank <= 3);
+
+  if (topScore === 0) {
+    const message = document.createElement("p");
+    message.className = "leaderboard-empty";
+    message.textContent = "No bookmarks collected yet.";
+    leaderboardList.appendChild(message);
+    return;
+  }
+
+  const list = document.createElement("ol");
+  list.className = "leaderboard-entries";
+
+  topThree.forEach(result => {
+    const entry = document.createElement("li");
+    entry.className = "leaderboard-entry";
+
+    if (result.rank === 1) {
+      entry.classList.add("leaderboard-first");
+    }
+
+    const rank = document.createElement("span");
+    rank.className = "leaderboard-rank";
+    rank.textContent = getRankLabel(result.rank);
+
+    const name = document.createElement("span");
+    name.className = "leaderboard-name";
+    name.textContent = result.person;
+
+    const score = document.createElement("span");
+    score.className = "leaderboard-score";
+    score.textContent =
+      result.count + (result.count === 1 ? " bookmark" : " bookmarks");
+
+    entry.append(rank, name, score);
+    list.appendChild(entry);
+  });
+
+  leaderboardList.appendChild(list);
+}
+
+
+async function loadLeaderboard() {
+  if (!leaderboardList) return;
+
+  try {
+    const ids = getAllBookIds();
+
+    // Fetch all readers concurrently.
+    const results = await Promise.all(
+      LEADERBOARD_PEOPLE.map(async person => {
+        const readIds = await fetchLeaderboardReadIds(person, ids);
+
+        return {
+          person,
+          count: countCollectedBookmarks(readIds)
+        };
+      })
+    );
+
+    renderLeaderboard(results);
+  } catch (error) {
+    console.error("Leaderboard error:", error);
+
+    leaderboardList.textContent =
+      "The leaderboard could not load. Please refresh the page to try again.";
+  }
+}
+
+
+loadLeaderboard();
+
