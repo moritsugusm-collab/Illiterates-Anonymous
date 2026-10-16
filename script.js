@@ -336,7 +336,7 @@ const TITLES = [
     title: "Tira's Wacky Reads",
     books: ["43352954", "5", "6"],
     image1: "images/empty-bookmark.png",
-    image2: "images/tiras-wacky-reads.png",
+    image2: "images/tira/tiras-wacky-reads.png",
     description: "A mix of strange, amusing, fantastical and sometimes grotesque books I’ve read and LOVED.",
 
     bookDetails: [
@@ -344,31 +344,31 @@ const TITLES = [
         id: "6759156",
         title: "Dorohedoro, Vol. 1",
         author: "Q. Hayashida",
-        cover: "images/blank.jpg"
+        cover: "images/tira/dorohedoro.jpg"
       },
       {
         id: "11970747",
         title: "The Hedge Knight",
         author: "George RR Martin",
-        cover: "images/blank.jpg"
+        cover: "images/tira/the-hedge-knight.jpg"
       },
       {
         id: "764347",
         title: "Unwind",
         author: "Neal Shusterman",
-        cover: "images/blank.jpg"
+        cover: "images/tira/unwind.jpg"
       },
       {
         id: "13554058",
         title: "The Wandering Earth",
         author: "Cixin Liu",
-        cover: "images/blank.jpg"
+        cover: "images/tira/the-wandering-earth.jpg"
       },
       {
         id: "60840449",
         title: "The Haar",
         author: "David Sodergren",
-        cover: "images/blank.jpg"
+        cover: "images/tira/the-haar.jpg"
       }
     ]
   },
