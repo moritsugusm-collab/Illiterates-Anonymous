@@ -950,24 +950,10 @@ closeButton.addEventListener("click", () => {
 });
 
 
+
 /* =================================
    TOP 3 BOOKMARKS LEADERBOARD
 ================================= */
-
-const LEADERBOARD_PEOPLE = [
-  "Bass",
-  "Baxter",
-  "Ethan",
-  "Hayder",
-  "Karina",
-  "Lyvia",
-  "Mac",
-  "Maren",
-  "Saf",
-  "Sam",
-  "Tira",
-  "Zaki"
-];
 
 const leaderboardList =
   document.getElementById("leaderboard-list");
@@ -986,8 +972,7 @@ function getAllBookIds() {
 }
 
 
-// Fetch one person's read IDs without changing the main grid.
-function fetchLeaderboardReadIds(person, ids) {
+function fetchLeaderboardData(ids) {
   return new Promise((resolve, reject) => {
     const callbackName =
       "leaderboardCallback_" +
@@ -998,10 +983,10 @@ function fetchLeaderboardReadIds(person, ids) {
     let finished = false;
 
     const timeout = setTimeout(() => {
-      finish(new Error("Request timed out for " + person));
+      finish(new Error("The leaderboard request timed out."));
     }, 20000);
 
-    function finish(error, readIds) {
+    function finish(error, data) {
       if (finished) return;
 
       finished = true;
@@ -1012,51 +997,33 @@ function fetchLeaderboardReadIds(person, ids) {
       if (error) {
         reject(error);
       } else {
-        resolve(readIds);
+        resolve(data);
       }
     }
 
     window[callbackName] = data => {
       if (!data || data.success !== true) {
         finish(
-          new Error(
-            data?.error || "Could not load data for " + person
-          )
+          new Error(data?.error || "The leaderboard API failed.")
         );
         return;
       }
 
-      if (!Array.isArray(data.results)) {
-        finish(new Error("Invalid results for " + person));
+      if (!Array.isArray(data.people)) {
+        finish(new Error("The leaderboard response is invalid."));
         return;
       }
 
-      const readIds = new Set();
-
-      data.results.forEach(result => {
-        if (result.read) {
-          readIds.add(String(result.id).trim());
-        }
-      });
-
-      finish(null, readIds);
+      finish(null, data);
     };
 
     script.onerror = () => {
-      finish(new Error("Network error for " + person));
-    };
-
-    script.onload = () => {
-      if (!finished) {
-        finish(
-          new Error("No callback received for " + person)
-        );
-      }
+      finish(new Error("Could not load the leaderboard API."));
     };
 
     script.src =
       API_URL +
-      "?person=" + encodeURIComponent(person) +
+      "?action=leaderboard" +
       "&ids=" + encodeURIComponent(ids.join(",")) +
       "&prefix=" + encodeURIComponent(callbackName);
 
@@ -1065,7 +1032,6 @@ function fetchLeaderboardReadIds(person, ids) {
 }
 
 
-// Count how many collections each person has collected.
 function countCollectedBookmarks(readIds) {
   return TITLES.reduce((count, item) => {
     const collected = item.books.some(id =>
@@ -1089,20 +1055,20 @@ function getRankLabel(rank) {
 function renderLeaderboard(results) {
   leaderboardList.replaceChildren();
 
-  if (results.length === 0) {
-    leaderboardList.textContent =
-      "No leaderboard results are available.";
+  results.sort((a, b) =>
+    b.count - a.count ||
+    a.person.localeCompare(b.person)
+  );
+
+  if (results.length === 0 || results[0].count === 0) {
+    const message = document.createElement("p");
+    message.className = "leaderboard-empty";
+    message.textContent = "No bookmarks collected yet.";
+    leaderboardList.appendChild(message);
     return;
   }
 
-  // Highest score first; alphabetical order for equal scores.
-  results.sort((a, b) =>
-    b.count - a.count || a.person.localeCompare(b.person)
-  );
-
-  const topScore = results[0].count;
-
-  // Standard competition ranking: 1, 2, 2, 4.
+  // Competition ranking: 1st, 2nd, 2nd, 4th.
   let previousCount = null;
   let currentRank = 0;
 
@@ -1115,16 +1081,8 @@ function renderLeaderboard(results) {
     result.rank = currentRank;
   });
 
-  // Include everyone tied for a position in the top three.
+  // Include all ties at the third-place cutoff.
   const topThree = results.filter(result => result.rank <= 3);
-
-  if (topScore === 0) {
-    const message = document.createElement("p");
-    message.className = "leaderboard-empty";
-    message.textContent = "No bookmarks collected yet.";
-    leaderboardList.appendChild(message);
-    return;
-  }
 
   const list = document.createElement("ol");
   list.className = "leaderboard-entries";
@@ -1148,7 +1106,8 @@ function renderLeaderboard(results) {
     const score = document.createElement("span");
     score.className = "leaderboard-score";
     score.textContent =
-      result.count + (result.count === 1 ? " bookmark" : " bookmarks");
+      result.count +
+      (result.count === 1 ? " bookmark" : " bookmarks");
 
     entry.append(rank, name, score);
     list.appendChild(entry);
@@ -1163,28 +1122,26 @@ async function loadLeaderboard() {
 
   try {
     const ids = getAllBookIds();
+    const data = await fetchLeaderboardData(ids);
 
-    // Fetch all readers concurrently.
-    const results = await Promise.all(
-      LEADERBOARD_PEOPLE.map(async person => {
-        const readIds = await fetchLeaderboardReadIds(person, ids);
-
-        return {
-          person,
-          count: countCollectedBookmarks(readIds)
-        };
-      })
-    );
+    const results = data.people.map(person => ({
+      person: person.person,
+      count: countCollectedBookmarks(
+        new Set(person.readIds.map(id => String(id).trim()))
+      )
+    }));
 
     renderLeaderboard(results);
+
   } catch (error) {
     console.error("Leaderboard error:", error);
 
     leaderboardList.textContent =
-      "The leaderboard could not load. Please refresh the page to try again.";
+      "The leaderboard could not load. Please refresh to try again.";
   }
 }
 
 
 loadLeaderboard();
+
 
