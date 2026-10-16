@@ -18,7 +18,8 @@ const API_URL =
  */
 const TITLES = [
   {
-    title: "Bass' Book List",
+                                                                                  /**Bass*/
+    title: "Bass' Ecology Books",
     books: ["43352954", "5", "6"],
     image1: "images/empty-bookmark.png",
     image2: "images/smiley.jpg",
@@ -47,7 +48,8 @@ const TITLES = [
   },
 
   {
-    title: "Dune",
+                                                                                     /**Baxter*/
+    title: "Baxter",
     books: ["234225", "44767458", "36346344", "44439415", "44492287"],
     image1: "images/empty-bookmark.png",
     image2: "images/smiley.jpg",
@@ -89,8 +91,279 @@ const TITLES = [
     ]
   },
 
+{
+                                                                                  /**Ethan*/
+    title: "Ethan",
+    books: ["43352954", "5", "6"],
+    image1: "images/empty-bookmark.png",
+    image2: "images/smiley.jpg",
+    description: "Bass' books are here",
+
+    bookDetails: [
+      {
+        id: "43352954",
+        title: "This is How You Lose The Time War",
+        author: "AEM",
+        cover: "images/time-war.jpg"
+      },
+      {
+        id: "5",
+        title: "azkaban",
+        author: "JKR again",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "6",
+        title: "Goblet of Fire apparently",
+        author: "JKR",
+        cover: "images/blank.jpg"
+      }
+    ]
+  },
+
+ {
+                                                                                  /**Hayder*/
+    title: "Hayder",
+    books: ["43352954", "5", "6"],
+    image1: "images/empty-bookmark.png",
+    image2: "images/smiley.jpg",
+    description: "Bass' books are here",
+
+    bookDetails: [
+      {
+        id: "43352954",
+        title: "This is How You Lose The Time War",
+        author: "AEM",
+        cover: "images/time-war.jpg"
+      },
+      {
+        id: "5",
+        title: "azkaban",
+        author: "JKR again",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "6",
+        title: "Goblet of Fire apparently",
+        author: "JKR",
+        cover: "images/blank.jpg"
+      }
+    ]
+  },
+
+ {
+                                                                                  /**Karina*/
+    title: "Karina",
+    books: ["43352954", "5", "6"],
+    image1: "images/empty-bookmark.png",
+    image2: "images/smiley.jpg",
+    description: "Bass' books are here",
+
+    bookDetails: [
+      {
+        id: "43352954",
+        title: "This is How You Lose The Time War",
+        author: "AEM",
+        cover: "images/time-war.jpg"
+      },
+      {
+        id: "5",
+        title: "azkaban",
+        author: "JKR again",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "6",
+        title: "Goblet of Fire apparently",
+        author: "JKR",
+        cover: "images/blank.jpg"
+      }
+    ]
+  },
+
+ {
+                                                                                  /**Lyvia*/
+    title: "Lyvia",
+    books: ["43352954", "5", "6"],
+    image1: "images/empty-bookmark.png",
+    image2: "images/smiley.jpg",
+    description: "Bass' books are here",
+
+    bookDetails: [
+      {
+        id: "43352954",
+        title: "This is How You Lose The Time War",
+        author: "AEM",
+        cover: "images/time-war.jpg"
+      },
+      {
+        id: "5",
+        title: "azkaban",
+        author: "JKR again",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "6",
+        title: "Goblet of Fire apparently",
+        author: "JKR",
+        cover: "images/blank.jpg"
+      }
+    ]
+  },
+
+ {
+                                                                                  /**Mac*/
+    title: "Mac",
+    books: ["43352954", "5", "6"],
+    image1: "images/empty-bookmark.png",
+    image2: "images/smiley.jpg",
+    description: "Bass' books are here",
+
+    bookDetails: [
+      {
+        id: "43352954",
+        title: "This is How You Lose The Time War",
+        author: "AEM",
+        cover: "images/time-war.jpg"
+      },
+      {
+        id: "5",
+        title: "azkaban",
+        author: "JKR again",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "6",
+        title: "Goblet of Fire apparently",
+        author: "JKR",
+        cover: "images/blank.jpg"
+      }
+    ]
+  },
+
+ {
+                                                                                  /**Maren*/
+    title: "Maren",
+    books: ["43352954", "5", "6"],
+    image1: "images/empty-bookmark.png",
+    image2: "images/smiley.jpg",
+    description: "Bass' books are here",
+
+    bookDetails: [
+      {
+        id: "43352954",
+        title: "This is How You Lose The Time War",
+        author: "AEM",
+        cover: "images/time-war.jpg"
+      },
+      {
+        id: "5",
+        title: "azkaban",
+        author: "JKR again",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "6",
+        title: "Goblet of Fire apparently",
+        author: "JKR",
+        cover: "images/blank.jpg"
+      }
+    ]
+  },
+
+ {
+                                                                                  /**Saf*/
+    title: "Saf",
+    books: ["43352954", "5", "6"],
+    image1: "images/empty-bookmark.png",
+    image2: "images/smiley.jpg",
+    description: "Bass' books are here",
+
+    bookDetails: [
+      {
+        id: "43352954",
+        title: "This is How You Lose The Time War",
+        author: "AEM",
+        cover: "images/time-war.jpg"
+      },
+      {
+        id: "5",
+        title: "azkaban",
+        author: "JKR again",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "6",
+        title: "Goblet of Fire apparently",
+        author: "JKR",
+        cover: "images/blank.jpg"
+      }
+    ]
+  },
+
+ {
+                                                                                  /**Sam*/
+    title: "Sam",
+    books: ["43352954", "5", "6"],
+    image1: "images/empty-bookmark.png",
+    image2: "images/smiley.jpg",
+    description: "Bass' books are here",
+
+    bookDetails: [
+      {
+        id: "43352954",
+        title: "This is How You Lose The Time War",
+        author: "AEM",
+        cover: "images/time-war.jpg"
+      },
+      {
+        id: "5",
+        title: "azkaban",
+        author: "JKR again",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "6",
+        title: "Goblet of Fire apparently",
+        author: "JKR",
+        cover: "images/blank.jpg"
+      }
+    ]
+  },
+
+ {
+                                                                                  /**Tira*/
+    title: "Tira's Wacky Reads",
+    books: ["43352954", "5", "6"],
+    image1: "images/empty-bookmark.png",
+    image2: "images/smiley.jpg",
+    description: "Bass' books are here",
+
+    bookDetails: [
+      {
+        id: "43352954",
+        title: "This is How You Lose The Time War",
+        author: "AEM",
+        cover: "images/time-war.jpg"
+      },
+      {
+        id: "5",
+        title: "azkaban",
+        author: "JKR again",
+        cover: "images/blank.jpg"
+      },
+      {
+        id: "6",
+        title: "Goblet of Fire apparently",
+        author: "JKR",
+        cover: "images/blank.jpg"
+      }
+    ]
+  },
+ 
   {
-    title: "The Lord of the Rings",
+                                                                                     /**Zaki*/
+    title: "Zaki",
     books: ["33", "15241", "117499"],
     image1: "images/empty-bookmark.png",
     image2: "images/lotr-read.jpg",
