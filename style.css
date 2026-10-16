@@ -347,6 +347,29 @@ body {
   line-height: 1.4;
 }
 
+
+/* Read status inside the popup */
+.modal-book-status {
+  display: inline-block;
+  margin: 10px 0 0;
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.modal-book-status.is-read {
+  background: #e3f2e5;
+  color: #246b35;
+}
+
+.modal-book-status.not-read {
+  background: #f0f0f0;
+  color: #666;
+}
+
 /* Mobile popup */
 @media (max-width: 500px) {
   .modal {
