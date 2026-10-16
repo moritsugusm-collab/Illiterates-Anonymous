@@ -334,7 +334,7 @@ const TITLES = [
  {
                                                                                   /**Tira*/
     title: "Tira's Wacky Reads",
-    books: ["43352954", "5", "6"],
+    books: ["6759156", "11970747", "764347", "13554058", "60840449"],
     image1: "images/empty-bookmark.png",
     image2: "images/tira/tiras-wacky-reads.png",
     description: "A mix of strange, amusing, fantastical and sometimes grotesque books I’ve read and LOVED.",
