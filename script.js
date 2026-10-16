@@ -742,7 +742,7 @@ function displayBooks(
    
     // Open the popup when a bookmark is clicked.
     function openThisBookmark() {
-      openBookModal(item, hasBeenRead);
+     openBookModal(item, hasBeenRead, readIds);
     }
     
     bookElement.addEventListener('click', openThisBookmark);
@@ -817,7 +817,8 @@ const modalBooks = document.getElementById('modalBooks');
 
 let previouslyFocusedElement = null;
 
-function openBookModal(item, hasBeenRead) {
+
+function openBookModal(item, hasBeenRead, readIds) {
   previouslyFocusedElement = document.activeElement;
 
   // Set the popup title and description.
@@ -825,19 +826,22 @@ function openBookModal(item, hasBeenRead) {
   modalDescription.textContent =
     item.description || 'Explore the books in this collection.';
 
-  // Show the same bookmark image used in the grid.
+  // Show the bookmark image.
   modalBookmark.src = hasBeenRead ? item.image2 : item.image1;
   modalBookmark.alt = item.title + ' bookmark';
 
   // Clear previous book covers.
   modalBooks.replaceChildren();
 
-  // Add up to three book covers.
+  // Display all books in this collection (up to five).
   const books = (item.bookDetails || []).slice(0, 5);
 
   books.forEach(book => {
     const card = document.createElement('article');
     card.className = 'modal-book';
+
+    // Check whether this specific book has been read.
+    const isRead = readIds.has(String(book.id).trim());
 
     const link = document.createElement('a');
     link.href =
@@ -851,16 +855,19 @@ function openBookModal(item, hasBeenRead) {
       'View ' + book.title + ' on Goodreads'
     );
 
+    // Book cover.
     const cover = document.createElement('img');
     cover.className = 'modal-cover';
     cover.src = book.cover;
     cover.alt = 'Cover of ' + book.title;
     cover.loading = 'lazy';
 
+    // Book title.
     const title = document.createElement('p');
     title.className = 'modal-book-title';
     title.textContent = book.title;
 
+    // Author.
     const author = document.createElement('p');
     author.className = 'modal-book-author';
     author.textContent = book.author;
@@ -868,7 +875,19 @@ function openBookModal(item, hasBeenRead) {
     link.appendChild(cover);
     link.appendChild(title);
     link.appendChild(author);
+
+    // Read-status indicator.
+    const status = document.createElement('p');
+    status.className = isRead
+      ? 'modal-book-status is-read'
+      : 'modal-book-status not-read';
+
+    status.textContent = isRead ? '✓ Read' : 'Not read';
+
+    // Keep the status outside the Goodreads link.
     card.appendChild(link);
+    card.appendChild(status);
+
     modalBooks.appendChild(card);
   });
 
